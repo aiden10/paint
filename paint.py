@@ -23,16 +23,16 @@ Pencil Button: 325, 110
 
 """
 CURRENT_DIR = os.getcwd()
+file_name = 'btd.png'
 screenshots_folder = os.path.join(CURRENT_DIR, 'screenshots')
-file_path = os.path.join(screenshots_folder, 'ghibli.png')
+file_path = os.path.join(screenshots_folder, file_name)
 
 TOP_LEFT = (640, 280)
 TOP_RIGHT = (1275, 280)
 BOTTOM_LEFT = (640, 910)
 BOTTOM_RIGHT = (1275, 910)
 
-def change_color(r, g, b):
-    hex = '%02x%02x%02x' % (r, g, b)
+def change_color(hex):
     pyautogui.click((1300, 140)) # edit color
     time.sleep(0.35)
     pyautogui.click((1150, 220)) # hex text field
@@ -45,24 +45,50 @@ def change_color(r, g, b):
 def get_hex(r, g, b):
     return '%02x%02x%02x' % (r, g, b)
 
-im = Image.open(file_path)   
+def save(x, y):
+    with open('save.txt', 'w') as file:
+        file.write(f'File: {file_name}\nX: {x}\nY: {y}')
+        file.close()
 
-width, height = im.size
-current_hex = ''
-increment_x = (TOP_RIGHT[0] - TOP_LEFT[0]) / width
-increment_y = (BOTTOM_LEFT[1] - TOP_LEFT[1]) / height
+def load():
+    with open('save.txt', 'r') as file:
+        x, y = 0, 0
+        data = file.readlines()
+        if len(data) != 0:
+            x = (data[1].strip())[3:]
+            y = (data[2].strip())[3:]
+        file.close()
+    return x, y
 
-time.sleep(1)
-pyautogui.click((325, 110)) # pencil button
+def main():
+    im = Image.open(file_path)   
 
-for x in range(0, width, 5):
-    for y in range(0, height, 5):
-        pixel = im.getpixel((x,y))
-        r, g, b = pixel[0], pixel[1], pixel[2]
-        
-        change_color(r, g, b)
-        time.sleep(0.1)
-        screen_x = TOP_LEFT[0] + (increment_x * x)
-        screen_y = TOP_LEFT[1] + (increment_y * y)
-        pyautogui.click((screen_x, screen_y), clicks=5)
-        time.sleep(0.5)
+    width, height = im.size
+    current_hex = ''
+    increment_x = (TOP_RIGHT[0] - TOP_LEFT[0]) / width
+    increment_y = (BOTTOM_LEFT[1] - TOP_LEFT[1]) / height
+
+    saved_x, saved_y = load()
+
+    time.sleep(1)
+    pyautogui.click((325, 110)) # pencil button
+
+    for x in range(int(saved_x), width, 2):
+        for y in range(int(saved_y), height, 2):
+            save(x, y)
+            pixel = im.getpixel((x,y))
+            r, g, b = pixel[0], pixel[1], pixel[2]
+            hex = get_hex(r, g, b)
+            if current_hex != hex:
+                change_color(hex)
+                time.sleep(0.1)
+
+            screen_x = TOP_LEFT[0] + (increment_x * x)
+            screen_y = TOP_LEFT[1] + (increment_y * y)
+            pyautogui.click((screen_x, screen_y), clicks=5)
+            time.sleep(0.5)
+            current_hex = hex
+
+    open('save.txt', 'w').close() # clear file
+
+main()  
