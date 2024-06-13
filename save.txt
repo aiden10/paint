@@ -1,3 +1,0 @@
-File: btd.png
-X: 2
-Y: 186
