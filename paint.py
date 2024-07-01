@@ -25,7 +25,7 @@ Pencil Button: 325, 110
 
 """
 CURRENT_DIR = os.getcwd()
-file_name = 'reduced_suika.png'
+file_name = 'reduced_eye.png'
 screenshots_folder = os.path.join(CURRENT_DIR, 'screenshots')
 file_path = os.path.join(screenshots_folder, file_name)
 
@@ -167,5 +167,6 @@ def main(style):
     open('save.txt', 'w').close() # clear file
 
 # main('dots')
-quick_print(10)
-# reduce_colors('jojo.png', num_colors=2)
+quick_print(2)
+# reduce_colors('eye.png', num_colors=48)
+
