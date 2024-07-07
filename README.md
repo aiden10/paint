@@ -6,10 +6,13 @@ Script which uses **pyautogui** to manually draw images and render STL files in 
 ![drawing-ezgif com-video-to-gif-converter](https://github.com/aiden10/paint/assets/51337166/6873e039-b3c6-4069-b236-930924e31ee9)
 ![cube-ezgif com-video-to-gif-converter](https://github.com/aiden10/paint/assets/51337166/050a446a-bb5e-4740-8153-11a3a51b3f37)
 
+![teapot](https://github.com/aiden10/paint/assets/51337166/ddd75011-921c-46bb-a5c3-d549d33eb119)
+
 ## Notes
 This is very slow and impractical. Larger STL files can take hours to render due to the constraint of manually drawing them. The next things I would like to try adding would be: binary STL file support, backspace culling, and lighting (even if it's basic). Lastly, even if it's impractical, doing it in Paint provides its own unique challenges and potentially creative ways to try and optimize the speed of the renders. 
 
-# Images
+
+# Image Copying
 ## Examples
 (bad timelapse)
 
